@@ -5,6 +5,7 @@ body{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-#card {
+.book-card {
     background-color: white;
+    margin: 5px 0 5px 0;
 }
