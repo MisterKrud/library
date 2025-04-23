@@ -147,8 +147,8 @@ submitButton.addEventListener("click", (e) => {
 });
 
 function clearDialogFields() {
-  titleInput.textContent = '';
-  authorInput.textContent ='';
-  pagesInput.textContent ='';
+  titleInput.value = '';
+  authorInput.value ='';
+  pagesInput.value ='';
 
 }
