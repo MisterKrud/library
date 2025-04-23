@@ -142,3 +142,10 @@ submitButton.addEventListener("click", (e) => {
   );
   dialog.close();
 });
+
+function clearDialogFields() {
+  titleInput.textContent = '';
+  authorInput.textContent ='';
+  pagesInput.textContent ='';
+  
+}
