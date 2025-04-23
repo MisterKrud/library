@@ -15,6 +15,7 @@ const cancelButton = document.getElementById("cancel");
 showButton.addEventListener("click", () => dialog.showModal());
 
 cancelButton.addEventListener("click", (e) => {
+
   dialog.close();
   e.preventDefault();
 });
@@ -52,8 +53,8 @@ function addBookToDom() {
   const newCard = document.createElement("div");
   newCard.className = "book-card";
   newCard.setAttribute("data-id", `${myLibrary[n - 1].id}`);
-  const newCardHeading = document.createElement("h4");
-  const newCardTitle = document.createElement("div");
+  const newCardTitle = document.createElement("h3");
+  
 
   const newCardAuthor = document.createElement("div");
 
@@ -63,20 +64,20 @@ function addBookToDom() {
   const deleteButton = document.createElement("button");
   deleteButton.className = "delete-button";
   docBody.appendChild(newCard);
-  newCard.appendChild(newCardHeading);
+ 
   newCard.appendChild(newCardTitle);
   newCard.appendChild(newCardAuthor);
   newCard.appendChild(newCardPages);
   newCard.appendChild(newCardRead);
   newCard.appendChild(deleteButton);
 
-  newCardHeading.textContent = `Book ${n} `;
-  newCardTitle.textContent = `Title: ${myLibrary[n - 1].title}`;
+ 
+  newCardTitle.textContent = `${myLibrary[n - 1].title}`;
 
-  newCardAuthor.textContent = `Author: ${myLibrary[n - 1].author}`;
-  newCardPages.innerHTML = `No. of pages: ${myLibrary[n - 1].pages}`;
-  newCardRead.textContent = `Read yet? ${myLibrary[n - 1].read}`;
-  deleteButton.textContent = "Delete this book";
+  newCardAuthor.innerHTML = `<span class="category">Author: </span>${myLibrary[n - 1].author}`;
+  newCardPages.innerHTML = `<span class="category">Pages: </span>${myLibrary[n - 1].pages}`;
+  newCardRead.innerHTML = `<span class="category">Read? </span>${myLibrary[n - 1].read}`;
+  deleteButton.innerHTML = "Delete this book";
 
   getDeleteButton();
 }
@@ -87,6 +88,10 @@ function getDeleteButton() {
     i.addEventListener("click", (
         
     ) => {
+      let confirmText = "Are you sure you want to delete?"
+
+      if (confirm(confirmText) == true){
+     
       focus(i);
       console.log('BEGIN');
 
@@ -95,22 +100,34 @@ function getDeleteButton() {
       const indexForDeletion = myLibrary.findIndex((book) => {
         return book.id === deleteId;
       });
- 
+      
 
       console.log(deleteId);
       if(indexForDeletion === -1){
         console.log('not found')
       } else{
+        
+        i.parentElement.remove();
       console.log(`index to delete is: ${indexForDeletion}`);
       let deletedItems = [];
       console.table(myLibrary);
       deletedItems.push(myLibrary.splice(indexForDeletion, 1));
       console.table(`deletedItems: ${deletedItems}`);
       console.table(`After deletion, array is: ${myLibrary}`);
-      return deletedItems;}
+      return deletedItems;
+      }
+      } else{
+        console.log('cancelled')
+      }
+     
+        
+      
+
     });
   });
 }
+
+
 
 submitButton.addEventListener("click", (e) => {
   e.preventDefault();
