@@ -7,6 +7,7 @@ const authorInput = document.getElementById("author");
 const pagesInput = document.getElementById("pages");
 const readInput = document.getElementById("read");
 
+
 const submitButton = document.querySelector("button");
 const dialog = document.querySelector("dialog");
 const showButton = document.getElementById("add-new");
@@ -80,6 +81,8 @@ function addBookToDom() {
   deleteButton.innerHTML = "Delete this book";
 
   getDeleteButton();
+  clearDialogFields();
+  
 }
 
 function getDeleteButton() {
@@ -147,5 +150,5 @@ function clearDialogFields() {
   titleInput.textContent = '';
   authorInput.textContent ='';
   pagesInput.textContent ='';
-  
+
 }

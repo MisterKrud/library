@@ -51,7 +51,7 @@ dialog>h3{
     padding: 10px;
     font-size: .9rem;;
 }
-input:focus{
+input:hover, input:focus{
     box-shadow: 4px 4px 4px rgb(231, 231, 231) ;
 }
 
@@ -81,7 +81,19 @@ button{
     border-radius: 10px;
     font-size: .9rem;
     background-color:#b1bbd8;
+    box-shadow: 2px 2px 3px lightgray
 
+}
+
+button:hover{
+background-color: #1a2a49;
+color: white;
+
+}
+
+button:active{
+    transform: translateY(1px);
+    box-shadow: 2px 1px lightgray
 }
 
 #button-container{
@@ -100,7 +112,7 @@ button{
     
 }
 
-#add-new:focus{
+#add-new:hover{
     background-color: #2c4980;
     color: white
 }
