@@ -99,7 +99,7 @@ container.innerHTML='';
  
   const newCard = document.createElement("div");
   newCard.className = "book-card";
-  // newCard.setAttribute("data-id", `${myLibrary[n - 1].id}`);
+  newCard.setAttribute("data-id", `${book.id}`);
   const newCardTitle = document.createElement("h3");
   
 
@@ -138,28 +138,31 @@ container.innerHTML='';
 
 function getDeleteButton() {
   let deleteButtonArray = document.querySelectorAll(".delete-button");
+  
   deleteButtonArray.forEach((i) => {
     i.addEventListener("click", (
         
     ) => {
-      let confirmText = "Are you sure you want to delete?"
 
-      if (confirm(confirmText) == true){
-     
-      focus(i);
       console.log('BEGIN');
 
       let deleteId = i.parentElement.getAttribute("data-id");
+      console.log(i.parentElement)
 
       const indexForDeletion = myLibrary.findIndex((book) => {
         return book.id === deleteId;
       });
       
 
+      let confirmText = "Are you sure you want to delete?"
+
+      
+     
+      
       console.log(deleteId);
       if(indexForDeletion === -1){
         console.log('not found')
-      } else{
+      } else if (confirm(confirmText) == true){
         
         i.parentElement.remove();
       console.log(`index to delete is: ${indexForDeletion}`);
@@ -170,7 +173,7 @@ function getDeleteButton() {
       console.table(`After deletion, array is: ${myLibrary}`);
       return deletedItems;
       }
-      } else{
+      else{
         console.log('cancelled')
       }
      
