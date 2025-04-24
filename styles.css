@@ -48,7 +48,7 @@ dialog>h3{
     margin-left: 40px;
 }
 
-#title, #author, #pages{
+#title, #author, #pages, .new-rating{
     outline: none;
     border: none;
     margin: 10px 0 20px 0;
@@ -313,4 +313,23 @@ input[type="range"]{
   
   .slider.round:before {
     border-radius: 50%;
+  }
+
+  .new-rating-button{
+   
+    height: 35px;
+    width: 90px;
+    padding-bottom: 10px;
+    /* margin-bottom:; */
+  }
+
+  .new-rating-button::content{
+    font-size: 12px;
+    padding-bottom: 15px;
+   
+  }
+
+  .new-rating{
+    width: 30px;
+    display: inline;
   }

@@ -52,7 +52,7 @@ function Book(title, author, pages, read, rating, id) {
       const ratingUpdater = document.createElement("div");
 
       ratingUpdater.innerHTML =
-        '<label for="newRating">New Rating</label><input type="number" class="new-rating" name="new-rating" min="1" max="5" step="1" /> <button type="submit" class="new-rating-button">Update</button>';
+        '<label for="newRating">New Rating: </label><input type="number" class="new-rating" name="new-rating" min="1" max="5" step="1" /> <button type="submit" class="new-rating-button">Update</button>';
       elementParent.appendChild(ratingUpdater);
       console.log(`ratingUpdater: ${ratingUpdater}`);
       const updateButton = elementParent.querySelector(".new-rating-button");
