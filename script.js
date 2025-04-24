@@ -1,5 +1,6 @@
 const myLibrary = [];
 const docBody = document.querySelector("body");
+const container = document.getElementById("container");
 const card = document.getElementById("card");
 const newBookForm = document.getElementById("new-book-entry");
 const titleInput = document.getElementById("title");
@@ -46,7 +47,8 @@ function addBookToLibrary(newTitle, newAuthor, newPages, newRead, bookId) {
 
   myLibrary.push(book);
 
-  addBookToDom();
+  // addBookToDom();
+  displayObjects();
 }
 
 function addBookToDom() {
@@ -64,7 +66,12 @@ function addBookToDom() {
   const newCardRead = document.createElement("div");
   const deleteButton = document.createElement("button");
   deleteButton.className = "delete-button";
-  docBody.appendChild(newCard);
+
+  if(!document.querySelector(".book-card")){
+  container.appendChild(newCard)
+  } else {
+   container.insertAdjacentElement("afterbegin", newCard);
+  }
  
   newCard.appendChild(newCardTitle);
   newCard.appendChild(newCardAuthor);
@@ -75,14 +82,58 @@ function addBookToDom() {
  
   newCardTitle.textContent = `${myLibrary[n - 1].title}`;
 
-  newCardAuthor.innerHTML = `<span class="category">Author: </span>${myLibrary[n - 1].author}`;
-  newCardPages.innerHTML = `<span class="category">Pages: </span>${myLibrary[n - 1].pages}`;
-  newCardRead.innerHTML = `<span class="category">Read? </span>${myLibrary[n - 1].read}`;
+  newCardAuthor.innerHTML = `<div> <span class="category">Author: </span>${myLibrary[n - 1].author}</div>`;
+  newCardPages.innerHTML = `<div> <span class="category">Pages: </span>${myLibrary[n - 1].pages}</div>`;
+  newCardRead.innerHTML = `<div> <span class="category">Read? </span>${myLibrary[n - 1].read}</div>`;
   deleteButton.innerHTML = "Delete this book";
 
   getDeleteButton();
   clearDialogFields();
   
+}
+
+
+function displayObjects(){
+container.innerHTML='';
+ myLibrary.forEach((book) => {
+ 
+  const newCard = document.createElement("div");
+  newCard.className = "book-card";
+  // newCard.setAttribute("data-id", `${myLibrary[n - 1].id}`);
+  const newCardTitle = document.createElement("h3");
+  
+
+  const newCardAuthor = document.createElement("div");
+
+  const newCardPages = document.createElement("div");
+
+  const newCardRead = document.createElement("div");
+  const deleteButton = document.createElement("button");
+  deleteButton.className = "delete-button";
+
+  if(!document.querySelector(".book-card")){
+  container.appendChild(newCard)
+  } else {
+   container.insertAdjacentElement("afterbegin", newCard);
+  }
+ 
+  newCard.appendChild(newCardTitle);
+  newCard.appendChild(newCardAuthor);
+  newCard.appendChild(newCardPages);
+  newCard.appendChild(newCardRead);
+  newCard.appendChild(deleteButton);
+
+ 
+  newCardTitle.textContent = `${book.title}`;
+
+  newCardAuthor.innerHTML = `<div> <span class="category">Author: </span>${book.author}</div>`;
+  newCardPages.innerHTML = `<div> <span class="category">Pages: </span>${book.pages}</div>`;
+  newCardRead.innerHTML = `<div> <span class="category">Read? </span>${book.read}</div>`;
+  deleteButton.innerHTML = "Delete this book";
+
+  getDeleteButton();
+  clearDialogFields();
+ })
 }
 
 function getDeleteButton() {
