@@ -35,33 +35,42 @@ function Book(title, author, pages, read, rating, id) {
     return `${title} by ${author}, ${pages} pages. Read=${read}.`;
   };
   this.changeReadStatus = function () {
-   
-    const parents = document.querySelectorAll(".book-card")
+    const parents = document.querySelectorAll(".book-card");
 
-    // console.table(parents);
-    // const parentsId = parents.forEach(parent => {
-    //   console.log(this.id)
-    //   console.log(parent.getAttribute("data-id"))
-    //   return parent.getAttribute("data-id") === this.id;
-      
-    // })
-  const toggleParent = document.querySelector(`.book-card[data-id='${this.id}']`)
-   const toggle = toggleParent.querySelector("input[type='checkbox']");
+    const elementParent = document.querySelector(
+      `.book-card[data-id='${this.id}']`
+    );
+    elementParent.setAttribute("id", `${this.id}`);
+    console.log(`elementParent: ${elementParent}`);
+    const toggle = elementParent.querySelector("input[type='checkbox']");
+    let checkBoxStatus = toggle.checked;
+    console.log(checkBoxStatus);
 
-   let checkBoxStatus = toggle.checked;
-   console.log(checkBoxStatus)
-   if(checkBoxStatus == true){
-    this.read = "Yes"
-    
-  } else {
-    this.read = "No";
-  }
-displayObjects();
-  
-  }
-    
-      
+    if (checkBoxStatus == true) {
+      this.read = "Yes";
+
+      const ratingUpdater = document.createElement("div");
+
+      ratingUpdater.innerHTML =
+        '<label for="newRating">New Rating</label><input type="number" class="new-rating" name="new-rating" min="1" max="5" step="1" /> <button type="submit" class="new-rating-button">Update</button>';
+      elementParent.appendChild(ratingUpdater);
+      console.log(`ratingUpdater: ${ratingUpdater}`);
+      const updateButton = elementParent.querySelector(".new-rating-button");
+      const updatedRating = document.querySelector(".new-rating");
+
+      console.log(elementParent.querySelector(".new-rating").value);
+
+      updateButton.addEventListener("click", () => {
+        const newRating = updatedRating.value;
+        this.rating = newRating;
+        displayObjects();
+      });
+    } else {
+      this.read = "No";
+      displayObjects();
+    }
   };
+}
 
 function addBookToLibrary(
   newTitle,
@@ -69,8 +78,7 @@ function addBookToLibrary(
   newPages,
   newRead,
   newRating,
-  bookId,
-  
+  bookId
 ) {
   const book = new Book(
     newTitle,
@@ -134,35 +142,22 @@ function displayObjects() {
       newCardRating.innerHTML = `<div> <span class="category">Rating: </span>Unrated</div>`;
     }
 
+    const toggle = newCardRead.querySelector(".toggle-read");
 
-   
-    const toggle = newCardRead.querySelector(".toggle-read")
-    
-    console.log(toggle)
-    console.log(newCardRead.querySelector(".toggle-read"))
-   
     toggle.addEventListener("change", () => {
+      const cardId = newCard.getAttribute("data-id");
 
-      const cardId = newCard.getAttribute("data-id")
-      console.log(cardId)
-     const bookToToggle = myLibrary.find(readBook => {
-      console.log(readBook.id)
-      return readBook.id === cardId
-      
-     })
-     console.log(bookToToggle);
-     bookToToggle.changeReadStatus();
-    })
+      const bookToToggle = myLibrary.find((readBook) => {
+        return readBook.id === cardId;
+      });
+
+      bookToToggle.changeReadStatus();
+    });
 
     getDeleteButton();
     clearDialogFields();
-   
   });
 }
-
-
-
-
 
 function getDeleteButton() {
   let deleteButtonArray = document.querySelectorAll(".delete-button");
@@ -195,11 +190,19 @@ function getDeleteButton() {
       } else {
         console.log("cancelled");
       }
-    })
-    
-    
-    
+    });
   });
+}
+
+function updateRating() {
+  const ratingUpdater = document.createElement("div[class='rating-updater']");
+
+  ratingUpdater.innerHTML = `<label for="newRating">New Rating</label><input type="number" class="new-rating"
+ name="new-rating" min="1" max="5" setp="1" /> <button type="submit" class="new-rating-button">Update</button>`;
+
+  //  const currentCard = document.querySelector(".book-card[data-id='");
+
+  elementParent.appendChild(ratingUpdater);
 }
 
 submitButton.addEventListener("click", (e) => {
@@ -216,7 +219,6 @@ submitButton.addEventListener("click", (e) => {
     ratingInput.value
   );
   dialog.close();
- 
 });
 
 function clearDialogFields() {
