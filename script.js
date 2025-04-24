@@ -94,9 +94,19 @@ container.innerHTML='';
 
   newCardAuthor.innerHTML = `<div> <span class="category">Author: </span>${book.author}</div>`;
   newCardPages.innerHTML = `<div> <span class="category">Pages: </span>${book.pages}</div>`;
-  newCardRead.innerHTML = `<div> <span class="category">Read? </span>${book.read}</div>`;
-  newCardRead.innerHTML = `<div> <span class="category">Rating: </span>${book.rating}/5</div>`;
+  newCardRead.innerHTML = `<div> <span class="category">Read? </span>${book.read} <span class="toggle"><label class="switch"><input type="checkbox"><span class="slider round"></span></label></span></div>`;
+  
   deleteButton.innerHTML = "Delete this book";
+
+  if(book.read === 'Yes'){
+    newCardRead.innerHTML = `<div> <span class="category">Read? </span>${book.read} <span class="toggle"><label class="switch"><input type="checkbox" class="toggle-read" checked/ ><span class="slider round"></span></label></span></div>`;
+    newCardRating.innerHTML = `<div> <span class="category">Rating: </span>${book.rating}/5</div>`;
+  } else {
+    newCardRead.innerHTML = `<div> <span class="category">Read? </span>${book.read} <span class="toggle"><label class="switch"><input type="checkbox" class="toggle-read"><span class="slider round"></span></label></span></div>`;
+    newCardRating.innerHTML = `<div> <span class="category">Rating: </span>Unrated</div>`;
+  }
+
+
 
   getDeleteButton();
   clearDialogFields();
@@ -149,6 +159,16 @@ function getDeleteButton() {
 
     });
   });
+}
+
+function toggleReadStatus(){
+  let toggleButtonArray = document.querySelectorAll(".toggle-read");
+  toggleButtonArray.forEach((i) => {
+    i.addEventListener("change", () => {
+
+    })
+  })
+
 }
 
 

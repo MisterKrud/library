@@ -138,15 +138,22 @@ button:active{
     display: grid;
 }
 
+.toggle{
+    /* background-color: rgb(178, 189, 221,50%); */
+    padding: 5px;
+    margin-right: auto;
+    font-size: 12px;
+    color: dimgray;
+}
 
-
+/* 
 .read-option[value="yes"]{
     background-color: chartreuse;
 }
 
 .read-option[value=no]{
     background-color: rgb(255, 0, 76);
-}
+} */
 
 
 
@@ -211,10 +218,9 @@ input[type="range"]{
     border-radius: 15px;
   
     padding: 10px 30px 10px 30px;
-    /* margin: 5px; */
+    
     box-shadow: 3px 2px 4px #bac4d8;
-    /* display: grid;
-     */
+   
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -223,7 +229,7 @@ input[type="range"]{
 
 .book-card h3 {
   margin:auto auto 10px auto;
-  /* justify-self: center; */
+ 
   
 }
 
@@ -240,3 +246,71 @@ input[type="range"]{
     margin-top: 1.5rem;
     margin-bottom: 1rem;
 }
+
+
+
+
+/*SWITCH. PLAGARISED AD ADAPTED FROM W3 SCHOOLS
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    margin-top: 10px;
+    width: 30px;
+    height: 1px;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #e4b6b6;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 13px;
+    width: 13px;
+    left: 3px;
+    bottom: 0.52px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #23b353;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(18px);
+    -ms-transform: translateX(18px);
+    transform: translateX(12px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
