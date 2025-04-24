@@ -164,7 +164,7 @@ button:active{
     display: grid;
 }
 
-#rating:focus{
+#rating:active, #rating:hover, #rating:focus{
     box-shadow: none;
 }
 

@@ -7,6 +7,7 @@ const titleInput = document.getElementById("title");
 const authorInput = document.getElementById("author");
 const pagesInput = document.getElementById("pages");
 const readInput = document.getElementById("read");
+const ratingInput = document.getElementById("rating");
 
 
 const submitButton = document.querySelector("button");
@@ -22,7 +23,7 @@ cancelButton.addEventListener("click", (e) => {
   e.preventDefault();
 });
 
-function Book(title, author, pages, read, id) {
+function Book(title, author, pages, read, rating, id) {
   if (!new.target) {
     throw Error("You must use the 'new' operator to call the constructor");
   }
@@ -30,18 +31,20 @@ function Book(title, author, pages, read, id) {
   this.author = author;
   this.pages = pages;
   this.read = read;
+  this.rating = rating;
   this.id = id;
   this.info = function () {
     return `${title} by ${author}, ${pages} pages. Read=${read}.`;
   };
 }
 
-function addBookToLibrary(newTitle, newAuthor, newPages, newRead, bookId) {
+function addBookToLibrary(newTitle, newAuthor, newPages, newRead, newRating, bookId) {
   const book = new Book(
     newTitle,
     newAuthor,
     newPages,
     newRead,
+    newRating,
     (bookId = crypto.randomUUID())
   );
 
@@ -51,46 +54,6 @@ function addBookToLibrary(newTitle, newAuthor, newPages, newRead, bookId) {
   displayObjects();
 }
 
-function addBookToDom() {
-  let n = myLibrary.length;
-  const newCard = document.createElement("div");
-  newCard.className = "book-card";
-  newCard.setAttribute("data-id", `${myLibrary[n - 1].id}`);
-  const newCardTitle = document.createElement("h3");
-  
-
-  const newCardAuthor = document.createElement("div");
-
-  const newCardPages = document.createElement("div");
-
-  const newCardRead = document.createElement("div");
-  const deleteButton = document.createElement("button");
-  deleteButton.className = "delete-button";
-
-  if(!document.querySelector(".book-card")){
-  container.appendChild(newCard)
-  } else {
-   container.insertAdjacentElement("afterbegin", newCard);
-  }
- 
-  newCard.appendChild(newCardTitle);
-  newCard.appendChild(newCardAuthor);
-  newCard.appendChild(newCardPages);
-  newCard.appendChild(newCardRead);
-  newCard.appendChild(deleteButton);
-
- 
-  newCardTitle.textContent = `${myLibrary[n - 1].title}`;
-
-  newCardAuthor.innerHTML = `<div> <span class="category">Author: </span>${myLibrary[n - 1].author}</div>`;
-  newCardPages.innerHTML = `<div> <span class="category">Pages: </span>${myLibrary[n - 1].pages}</div>`;
-  newCardRead.innerHTML = `<div> <span class="category">Read? </span>${myLibrary[n - 1].read}</div>`;
-  deleteButton.innerHTML = "Delete this book";
-
-  getDeleteButton();
-  clearDialogFields();
-  
-}
 
 
 function displayObjects(){
@@ -108,7 +71,9 @@ container.innerHTML='';
   const newCardPages = document.createElement("div");
 
   const newCardRead = document.createElement("div");
+  const newCardRating = document.createElement("div");
   const deleteButton = document.createElement("button");
+
   deleteButton.className = "delete-button";
 
   if(!document.querySelector(".book-card")){
@@ -121,6 +86,7 @@ container.innerHTML='';
   newCard.appendChild(newCardAuthor);
   newCard.appendChild(newCardPages);
   newCard.appendChild(newCardRead);
+  newCard.appendChild(newCardRating);
   newCard.appendChild(deleteButton);
 
  
@@ -129,6 +95,7 @@ container.innerHTML='';
   newCardAuthor.innerHTML = `<div> <span class="category">Author: </span>${book.author}</div>`;
   newCardPages.innerHTML = `<div> <span class="category">Pages: </span>${book.pages}</div>`;
   newCardRead.innerHTML = `<div> <span class="category">Read? </span>${book.read}</div>`;
+  newCardRead.innerHTML = `<div> <span class="category">Rating: </span>${book.rating}/5</div>`;
   deleteButton.innerHTML = "Delete this book";
 
   getDeleteButton();
@@ -195,7 +162,9 @@ submitButton.addEventListener("click", (e) => {
     titleInput.value,
     authorInput.value,
     pagesInput.value,
-    readValue()
+    
+    readValue(),
+    ratingInput.value,
   );
   dialog.close();
 });
@@ -206,3 +175,47 @@ function clearDialogFields() {
   pagesInput.value ='';
 
 }
+
+
+
+//OLD FUNCTION
+// function addBookToDom() {
+//   let n = myLibrary.length;
+//   const newCard = document.createElement("div");
+//   newCard.className = "book-card";
+//   newCard.setAttribute("data-id", `${myLibrary[n - 1].id}`);
+//   const newCardTitle = document.createElement("h3");
+  
+
+//   const newCardAuthor = document.createElement("div");
+
+//   const newCardPages = document.createElement("div");
+
+//   const newCardRead = document.createElement("div");
+//   const deleteButton = document.createElement("button");
+//   deleteButton.className = "delete-button";
+
+//   if(!document.querySelector(".book-card")){
+//   container.appendChild(newCard)
+//   } else {
+//    container.insertAdjacentElement("afterbegin", newCard);
+//   }
+ 
+//   newCard.appendChild(newCardTitle);
+//   newCard.appendChild(newCardAuthor);
+//   newCard.appendChild(newCardPages);
+//   newCard.appendChild(newCardRead);
+//   newCard.appendChild(deleteButton);
+
+ 
+//   newCardTitle.textContent = `${myLibrary[n - 1].title}`;
+
+//   newCardAuthor.innerHTML = `<div> <span class="category">Author: </span>${myLibrary[n - 1].author}</div>`;
+//   newCardPages.innerHTML = `<div> <span class="category">Pages: </span>${myLibrary[n - 1].pages}</div>`;
+//   newCardRead.innerHTML = `<div> <span class="category">Read? </span>${myLibrary[n - 1].read}</div>`;
+//   deleteButton.innerHTML = "Delete this book";
+
+//   getDeleteButton();
+//   clearDialogFields();
+  
+// }
