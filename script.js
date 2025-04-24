@@ -9,7 +9,6 @@ const pagesInput = document.getElementById("pages");
 const readInput = document.getElementById("read");
 const ratingInput = document.getElementById("rating");
 
-
 const submitButton = document.querySelector("button");
 const dialog = document.querySelector("dialog");
 const showButton = document.getElementById("add-new");
@@ -18,7 +17,6 @@ const cancelButton = document.getElementById("cancel");
 showButton.addEventListener("click", () => dialog.showModal());
 
 cancelButton.addEventListener("click", (e) => {
-
   dialog.close();
   e.preventDefault();
 });
@@ -36,9 +34,44 @@ function Book(title, author, pages, read, rating, id) {
   this.info = function () {
     return `${title} by ${author}, ${pages} pages. Read=${read}.`;
   };
-}
+  this.changeReadStatus = function () {
+   
+    const parents = document.querySelectorAll(".book-card")
 
-function addBookToLibrary(newTitle, newAuthor, newPages, newRead, newRating, bookId) {
+    // console.table(parents);
+    // const parentsId = parents.forEach(parent => {
+    //   console.log(this.id)
+    //   console.log(parent.getAttribute("data-id"))
+    //   return parent.getAttribute("data-id") === this.id;
+      
+    // })
+  const toggleParent = document.querySelector(`.book-card[data-id='${this.id}']`)
+   const toggle = toggleParent.querySelector("input[type='checkbox']");
+
+   let checkBoxStatus = toggle.checked;
+   console.log(checkBoxStatus)
+   if(checkBoxStatus == true){
+    this.read = "Yes"
+    
+  } else {
+    this.read = "No";
+  }
+displayObjects();
+  
+  }
+    
+      
+  };
+
+function addBookToLibrary(
+  newTitle,
+  newAuthor,
+  newPages,
+  newRead,
+  newRating,
+  bookId,
+  
+) {
   const book = new Book(
     newTitle,
     newAuthor,
@@ -54,124 +87,120 @@ function addBookToLibrary(newTitle, newAuthor, newPages, newRead, newRating, boo
   displayObjects();
 }
 
+function displayObjects() {
+  container.innerHTML = "";
+  myLibrary.forEach((book) => {
+    const newCard = document.createElement("div");
+    newCard.className = "book-card";
+    newCard.setAttribute("data-id", `${book.id}`);
+    const newCardTitle = document.createElement("h3");
+
+    const newCardAuthor = document.createElement("div");
+
+    const newCardPages = document.createElement("div");
+
+    const newCardRead = document.createElement("div");
+    const newCardRating = document.createElement("div");
+    const deleteButton = document.createElement("button");
+
+    deleteButton.className = "delete-button";
+
+    if (!document.querySelector(".book-card")) {
+      container.appendChild(newCard);
+    } else {
+      container.insertAdjacentElement("afterbegin", newCard);
+    }
+
+    newCard.appendChild(newCardTitle);
+    newCard.appendChild(newCardAuthor);
+    newCard.appendChild(newCardPages);
+    newCard.appendChild(newCardRead);
+    newCard.appendChild(newCardRating);
+    newCard.appendChild(deleteButton);
+
+    newCardTitle.textContent = `${book.title}`;
+
+    newCardAuthor.innerHTML = `<div> <span class="category">Author: </span>${book.author}</div>`;
+    newCardPages.innerHTML = `<div> <span class="category">Pages: </span>${book.pages}</div>`;
+    newCardRead.innerHTML = `<div> <span class="category">Read? </span>${book.read} <span class="toggle"><label class="switch"><input type="checkbox"><span class="slider round"></span></label></span></div>`;
+
+    deleteButton.innerHTML = "Delete this book";
+
+    if (book.read === "Yes") {
+      newCardRead.innerHTML = `<div> <span class="category">Read? </span>${book.read} <span class="toggle"><label class="switch"><input type="checkbox" class="toggle-read" checked/ ><span class="slider round"></span></label></span></div>`;
+      newCardRating.innerHTML = `<div> <span class="category">Rating: </span>${book.rating}/5</div>`;
+    } else {
+      newCardRead.innerHTML = `<div> <span class="category">Read? </span>${book.read} <span class="toggle"><label class="switch"><input type="checkbox" class="toggle-read"><span class="slider round"></span></label></span></div>`;
+      newCardRating.innerHTML = `<div> <span class="category">Rating: </span>Unrated</div>`;
+    }
 
 
-function displayObjects(){
-container.innerHTML='';
- myLibrary.forEach((book) => {
- 
-  const newCard = document.createElement("div");
-  newCard.className = "book-card";
-  newCard.setAttribute("data-id", `${book.id}`);
-  const newCardTitle = document.createElement("h3");
-  
+   
+    const toggle = newCardRead.querySelector(".toggle-read")
+    
+    console.log(toggle)
+    console.log(newCardRead.querySelector(".toggle-read"))
+   
+    toggle.addEventListener("change", () => {
 
-  const newCardAuthor = document.createElement("div");
+      const cardId = newCard.getAttribute("data-id")
+      console.log(cardId)
+     const bookToToggle = myLibrary.find(readBook => {
+      console.log(readBook.id)
+      return readBook.id === cardId
+      
+     })
+     console.log(bookToToggle);
+     bookToToggle.changeReadStatus();
+    })
 
-  const newCardPages = document.createElement("div");
-
-  const newCardRead = document.createElement("div");
-  const newCardRating = document.createElement("div");
-  const deleteButton = document.createElement("button");
-
-  deleteButton.className = "delete-button";
-
-  if(!document.querySelector(".book-card")){
-  container.appendChild(newCard)
-  } else {
-   container.insertAdjacentElement("afterbegin", newCard);
-  }
- 
-  newCard.appendChild(newCardTitle);
-  newCard.appendChild(newCardAuthor);
-  newCard.appendChild(newCardPages);
-  newCard.appendChild(newCardRead);
-  newCard.appendChild(newCardRating);
-  newCard.appendChild(deleteButton);
-
- 
-  newCardTitle.textContent = `${book.title}`;
-
-  newCardAuthor.innerHTML = `<div> <span class="category">Author: </span>${book.author}</div>`;
-  newCardPages.innerHTML = `<div> <span class="category">Pages: </span>${book.pages}</div>`;
-  newCardRead.innerHTML = `<div> <span class="category">Read? </span>${book.read} <span class="toggle"><label class="switch"><input type="checkbox"><span class="slider round"></span></label></span></div>`;
-  
-  deleteButton.innerHTML = "Delete this book";
-
-  if(book.read === 'Yes'){
-    newCardRead.innerHTML = `<div> <span class="category">Read? </span>${book.read} <span class="toggle"><label class="switch"><input type="checkbox" class="toggle-read" checked/ ><span class="slider round"></span></label></span></div>`;
-    newCardRating.innerHTML = `<div> <span class="category">Rating: </span>${book.rating}/5</div>`;
-  } else {
-    newCardRead.innerHTML = `<div> <span class="category">Read? </span>${book.read} <span class="toggle"><label class="switch"><input type="checkbox" class="toggle-read"><span class="slider round"></span></label></span></div>`;
-    newCardRating.innerHTML = `<div> <span class="category">Rating: </span>Unrated</div>`;
-  }
-
-
-
-  getDeleteButton();
-  clearDialogFields();
- })
+    getDeleteButton();
+    clearDialogFields();
+   
+  });
 }
+
+
+
+
 
 function getDeleteButton() {
   let deleteButtonArray = document.querySelectorAll(".delete-button");
-  
-  deleteButtonArray.forEach((i) => {
-    i.addEventListener("click", (
-        
-    ) => {
 
-      console.log('BEGIN');
+  deleteButtonArray.forEach((i) => {
+    i.addEventListener("click", () => {
+      console.log("BEGIN");
 
       let deleteId = i.parentElement.getAttribute("data-id");
-      console.log(i.parentElement)
+      console.log(i.parentElement);
 
       const indexForDeletion = myLibrary.findIndex((book) => {
         return book.id === deleteId;
       });
-      
 
-      let confirmText = "Are you sure you want to delete?"
+      let confirmText = "Are you sure you want to delete?";
 
-      
-     
-      
       console.log(deleteId);
-      if(indexForDeletion === -1){
-        console.log('not found')
-      } else if (confirm(confirmText) == true){
-        
+      if (indexForDeletion === -1) {
+        console.log("not found");
+      } else if (confirm(confirmText) == true) {
         i.parentElement.remove();
-      console.log(`index to delete is: ${indexForDeletion}`);
-      let deletedItems = [];
-      console.table(myLibrary);
-      deletedItems.push(myLibrary.splice(indexForDeletion, 1));
-      console.table(`deletedItems: ${deletedItems}`);
-      console.table(`After deletion, array is: ${myLibrary}`);
-      return deletedItems;
+        console.log(`index to delete is: ${indexForDeletion}`);
+        let deletedItems = [];
+        console.table(myLibrary);
+        deletedItems.push(myLibrary.splice(indexForDeletion, 1));
+        console.table(`deletedItems: ${deletedItems}`);
+        console.table(`After deletion, array is: ${myLibrary}`);
+        return deletedItems;
+      } else {
+        console.log("cancelled");
       }
-      else{
-        console.log('cancelled')
-      }
-     
-        
-      
-
-    });
+    })
+    
+    
+    
   });
 }
-
-function toggleReadStatus(){
-  let toggleButtonArray = document.querySelectorAll(".toggle-read");
-  toggleButtonArray.forEach((i) => {
-    i.addEventListener("change", () => {
-
-    })
-  })
-
-}
-
-
 
 submitButton.addEventListener("click", (e) => {
   e.preventDefault();
@@ -182,21 +211,19 @@ submitButton.addEventListener("click", (e) => {
     titleInput.value,
     authorInput.value,
     pagesInput.value,
-    
+
     readValue(),
-    ratingInput.value,
+    ratingInput.value
   );
   dialog.close();
+ 
 });
 
 function clearDialogFields() {
-  titleInput.value = '';
-  authorInput.value ='';
-  pagesInput.value ='';
-
+  titleInput.value = "";
+  authorInput.value = "";
+  pagesInput.value = "";
 }
-
-
 
 //OLD FUNCTION
 // function addBookToDom() {
@@ -205,7 +232,6 @@ function clearDialogFields() {
 //   newCard.className = "book-card";
 //   newCard.setAttribute("data-id", `${myLibrary[n - 1].id}`);
 //   const newCardTitle = document.createElement("h3");
-  
 
 //   const newCardAuthor = document.createElement("div");
 
@@ -220,14 +246,13 @@ function clearDialogFields() {
 //   } else {
 //    container.insertAdjacentElement("afterbegin", newCard);
 //   }
- 
+
 //   newCard.appendChild(newCardTitle);
 //   newCard.appendChild(newCardAuthor);
 //   newCard.appendChild(newCardPages);
 //   newCard.appendChild(newCardRead);
 //   newCard.appendChild(deleteButton);
 
- 
 //   newCardTitle.textContent = `${myLibrary[n - 1].title}`;
 
 //   newCardAuthor.innerHTML = `<div> <span class="category">Author: </span>${myLibrary[n - 1].author}</div>`;
@@ -237,5 +262,5 @@ function clearDialogFields() {
 
 //   getDeleteButton();
 //   clearDialogFields();
-  
+
 // }
