@@ -21,6 +21,30 @@ cancelButton.addEventListener("click", (e) => {
   e.preventDefault();
 });
 
+
+
+// class Library {
+//   constructor(){
+//     this.library=[]
+//   }
+//   addBookToLibrary(book){
+//     this.library.push(book);
+//     console.log(this.library)
+//   }
+//   removeBookFromLibrary(book){
+//     const n = this.library.indexOf(book);
+//     const removed = this.library.splice(n, 1);
+  
+//   }}
+
+
+
+
+
+
+
+
+
 //start Class
 class Book {
 constructor(title, author, pages, read, rating, id) {
@@ -31,6 +55,7 @@ constructor(title, author, pages, read, rating, id) {
   this.read = read;
   this.rating = rating;
   this.id = id;
+  this.library = []
  };
 
 
@@ -58,6 +83,13 @@ constructor(title, author, pages, read, rating, id) {
 displayObjects();
   
   }
+
+
+
+ addNewBooktoLibrary(){
+  this.library.push(this.title,this.author,this.pages,this.read,this.rating,this.id)
+console.log(this.library)
+  }
     
       
  
@@ -82,6 +114,7 @@ function addBookToLibrary(
   );
 
   myLibrary.push(book);
+  console.log(myLibrary)
 
   // addBookToDom();
   displayObjects();
@@ -138,8 +171,8 @@ function displayObjects() {
    
     const toggle = newCardRead.querySelector(".toggle-read")
     
-    console.log(toggle)
-    console.log(newCardRead.querySelector(".toggle-read"))
+    // console.log(toggle)
+    // console.log(newCardRead.querySelector(".toggle-read"))
    
     toggle.addEventListener("change", () => {
 
