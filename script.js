@@ -54,14 +54,14 @@ constructor(title, author, pages, read, rating, id) {
   this.pages = pages;
   this.read = read;
   this.rating = rating;
-  this.id = id;
-  this.library = []
+  this.id = crypto.randomUUID();
+  Book.addNewBookToLibrary(this)
  };
 
+static library = []
 
-
-   info() {
-    return `${title} by ${author}, ${pages} pages. Read=${read}.`;
+ get info() {
+    return `${this.title} by ${this.author}, ${this.pages} pages. Read=${this.read}.`;
   };
 
   readStatus() {
@@ -80,49 +80,59 @@ constructor(title, author, pages, read, rating, id) {
   } else {
     this.read = "No";
   }
-displayObjects();
+
   
   }
 
 
-
- addNewBooktoLibrary(){
-  this.library.push(this.title,this.author,this.pages,this.read,this.rating,this.id)
-console.log(this.library)
+ static addNewBookToLibrary(book){
+  Book.library.push(book)
+  console.log(Book.library)
+  displayObjects();
   }
+
+deleteBookFromLibrary(){
+  let n = Book.library.findIndex((book) => book.id != this.id ? false:true)
+  const deleted = Book.library.splice(n, 1)
+}
+
     
       
  
 }
 
-function addBookToLibrary(
-  newTitle,
-  newAuthor,
-  newPages,
-  newRead,
-  newRating,
-  bookId,
+// function addBookToLibrary(
+//   newTitle,
+//   newAuthor,
+//   newPages,
+//   newRead,
+//   newRating,
+//   bookId,
   
-) {
-  const book = new Book(
-    newTitle,
-    newAuthor,
-    newPages,
-    newRead,
-    newRating,
-    (bookId = crypto.randomUUID())
-  );
+// ) {
+//   const book = new Book(
+//     newTitle,
+//     newAuthor,
+//     newPages,
+//     newRead,
+//     newRating,
+//     (bookId = crypto.randomUUID())
+//   );
 
-  myLibrary.push(book);
-  console.log(myLibrary)
+//   myLibrary.push(book);
+//   console.log(myLibrary)
 
-  // addBookToDom();
-  displayObjects();
-}
+//   // addBookToDom();
+//   displayObjects();
+// }
 
 function displayObjects() {
   container.innerHTML = "";
-  myLibrary.forEach((book) => {
+  let n=0
+
+  Book.library.forEach((book) => {
+   n++
+    console.log(`Book ${n}: ${book}`)
     const newCard = document.createElement("div");
     newCard.className = "book-card";
     newCard.setAttribute("data-id", `${book.id}`);
@@ -207,8 +217,11 @@ function getDeleteButton() {
       let deleteId = i.parentElement.getAttribute("data-id");
       console.log(i.parentElement);
 
-      const indexForDeletion = myLibrary.findIndex((book) => {
+      const indexForDeletion = Book.library.findIndex((book) => {
+
+     
         return book.id === deleteId;
+       
       });
 
       let confirmText = "Are you sure you want to delete?";
@@ -220,10 +233,11 @@ function getDeleteButton() {
         i.parentElement.remove();
         console.log(`index to delete is: ${indexForDeletion}`);
         let deletedItems = [];
-        console.table(myLibrary);
-        deletedItems.push(myLibrary.splice(indexForDeletion, 1));
+        console.table(Book.library);
+        // book[indexForDeletion].deleteBookFromLibrary()
+        deletedItems.push(Book.library.splice(indexForDeletion, 1));
         console.table(`deletedItems: ${deletedItems}`);
-        console.table(`After deletion, array is: ${myLibrary}`);
+        console.table(`After deletion, array is: ${Book.library}`);
         return deletedItems;
       } else {
         console.log("cancelled");
@@ -240,7 +254,7 @@ submitButton.addEventListener("click", (e) => {
 
   const readValue = () => (readInput.value === "yes" ? "Yes" : "No");
 
-  addBookToLibrary(
+const book = new Book(
     titleInput.value,
     authorInput.value,
     pagesInput.value,
@@ -249,7 +263,7 @@ submitButton.addEventListener("click", (e) => {
     ratingInput.value
   );
   dialog.close();
- 
+ clearDialogFields();
 });
 
 function clearDialogFields() {
